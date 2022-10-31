@@ -1,10 +1,34 @@
 .social-block {
   position: relative;
 
-  &:hover {
+  &:hover,
+  //показываем также когда сфокусировались на туглере
+  & .social-block__toggler:focus ~ *,
+  //или когда сфокусировались на элементе списка
+  & ul:focus-within {
     .social-block__list {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    li {
+      .social-block__link {
+        top: 0;
+        opacity: 1;
+        transition: all 0.6s ease-in-out, color 0.35s ease-in-out;
+      }
+      //чтобы при исчезновении ссылки исчезали все вместе, добавляем делэи только в конечное состояние когда ссылки показаны
+      &:nth-child(1) .social-block__link {
+        transition-delay: 0s;
+      }
+
+      &:nth-child(2) .social-block__link {
+        transition-delay: 150ms;
+      }
+
+      &:nth-child(3) .social-block__link {
+        transition-delay: 300ms;
+      }
     }
   }
 }
@@ -35,6 +59,7 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
+    transition: all 0.3s ease-in;
   }
 
   svg {
@@ -89,6 +114,8 @@
   margin-top: 1.5rem;
   opacity: 0;
   pointer-events: none;
+  //анимация появления и скрытия списка как целого
+  transition: all 0.3s ease-in-out;
 
   @media (min-width: $stop-scaling) {
     margin-top: 15px;
@@ -168,6 +195,10 @@
   color: $c-light;
   border: 2px solid transparent;
   border-radius: 50%;
+  opacity: 0;
+  top: 20px;
+  //чтобы при скрытии не было анимации
+  transition-delay: 0.6s;
 
   @media (min-width: $stop-scaling) {
     width: 40px;
